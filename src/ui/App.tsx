@@ -5,6 +5,7 @@ import { anchor, isSimulated, station, useApp } from '../store/app';
 import type { TabId, ThemeChoice } from '../store/app';
 import type { SourceEngine } from '../store/sourceEngine';
 import { transportKindLabel } from '../transport/Transport';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Icon } from './components/Icon';
 import { TasaMark } from './components/TasaMark';
 import { fmtAge } from './format';
@@ -124,11 +125,13 @@ export function App() {
       </header>
       <Banner now={now} />
       <main>
-        {tab === 'anchor' && <AnchorPanel />}
-        {tab === 'activation' && <ActivationPanel />}
-        {tab === 'station' && <StationPanel />}
-        {tab === 'trials' && <TrialsPanel />}
-        {tab === 'connections' && <ConnectionsPanel />}
+        <ErrorBoundary key={tab} where={`panelu "${TABS.find((t) => t.id === tab)?.label}"`}>
+          {tab === 'anchor' && <AnchorPanel />}
+          {tab === 'activation' && <ActivationPanel />}
+          {tab === 'station' && <StationPanel />}
+          {tab === 'trials' && <TrialsPanel />}
+          {tab === 'connections' && <ConnectionsPanel />}
+        </ErrorBoundary>
       </main>
       <div className="toasts" aria-live="polite">
         {toasts.map((t) => (

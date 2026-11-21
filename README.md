@@ -11,6 +11,12 @@ Aplikacja jest statyczną stroną (Vite + React + TypeScript) bez serwera. Rekor
 
 ## Uruchomienie
 
+Plik `index.html` w katalogu głównym jest plikiem źródłowym: otwarty bezpośrednio w przeglądarce pokazuje tylko komunikat z instrukcją. Aplikację uruchamia się na jeden z trzech sposobów:
+
+- serwer deweloperski (`npm run dev`),
+- zbudowany plik `dist/index.html` (`npm run build`), który zawiera skrypt, style i czcionki i otwiera się dwuklikiem w Chrome lub Edge, także bez internetu,
+- GitHub Pages (opis niżej).
+
 Wymagany Node.js 20 lub nowszy (sprawdzone na 22).
 
 ```bash
@@ -27,11 +33,15 @@ Strona działa pod adresem http://localhost:5173. Web Serial i Web Bluetooth wym
 npm run build
 ```
 
-Wynik w katalogu `dist/` to statyczna strona (ścieżki względne, `base: './'`), którą można serwować dowolnym serwerem plików, np.:
+Wynik to jeden plik `dist/index.html` (ok. 640 kB). Można go otworzyć z dysku albo serwować dowolnym serwerem plików, np.:
 
 ```bash
 npm run preview
 ```
+
+### GitHub Pages
+
+Workflow `.github/workflows/pages.yml` buduje i publikuje stronę po każdym pushu na `main` (lub ręcznie z zakładki Actions). Jednorazowo trzeba włączyć Pages: Settings → Pages → Source: GitHub Actions. Strona będzie pod adresem `https://<użytkownik>.github.io/TASA/`. Web Serial i Web Bluetooth działają na tej stronie, bo jest serwowana przez https.
 
 Testy jednostkowe (Vitest):
 
@@ -146,7 +156,7 @@ tests/           testy Vitest
 
 ## Logotypy
 
-`TASA.jfif` zwektoryzowano (potrace) do `src/assets/tasa-wordmark.svg`; nagłówek używa go jako maski, więc logo zmienia kolor w trybie ciemnym. `TASA_A.svg` jest ikoną strony i interaktywnym komponentem `src/ui/components/TasaMark.tsx`: najechanie skręca górny trójkąt pryzmatu tensegrity, kliknięcie odtwarza wyzwolenie (pręty układają się w gwiazdę zgodną z kierunkami sześciu grotów, groty wystrzeliwują, struktura wraca z tłumionymi drganiami). Przy ustawieniu "ogranicz ruch" animacja jest wyłączona.
+`TASA.jfif` zwektoryzowano (potrace) do `src/assets/tasa-wordmark.svg`; nagłówek używa go jako maski, więc logo zmienia kolor w trybie ciemnym. `TASA_A.svg` jest ikoną strony (wbudowaną w `index.html`) i interaktywnym komponentem `src/ui/components/TasaMark.tsx`: najechanie skręca górny trójkąt pryzmatu tensegrity, kliknięcie odtwarza wyzwolenie (pręty układają się w gwiazdę zgodną z kierunkami sześciu grotów, groty wystrzeliwują, struktura wraca z tłumionymi drganiami). Przy ustawieniu "ogranicz ruch" animacja jest wyłączona.
 
 ## Licencja
 

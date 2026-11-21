@@ -1,6 +1,6 @@
 # Architektura TASA Monitor
 
-Aplikacja statyczna (Vite + React + TypeScript), bez serwera. Dane trafiają do przeglądarki przez wymienny transport, są parsowane do ramek, przetwarzane w warstwie domenowej i wyświetlane w panelach. Rekordy prób są zapisywane w IndexedDB.
+Aplikacja statyczna (Vite + React + TypeScript), bez serwera. Build tworzy jeden plik `dist/index.html` ze skryptem, stylami i czcionkami, który działa także otwarty z dysku. Dane trafiają do przeglądarki przez wymienny transport, są parsowane do ramek, przetwarzane w warstwie domenowej i wyświetlane w panelach. Rekordy prób są zapisywane w IndexedDB.
 
 ```
  Transport (Web Serial | Web Bluetooth | WebSocket | Symulator)
@@ -23,7 +23,6 @@ Aplikacja statyczna (Vite + React + TypeScript), bez serwera. Dane trafiają do 
 
 ```
 docs/                    protokół, architektura, scenariusze testowe
-public/                  logotypy (TASA wektorowo, TASA_A)
 src/
   config/tasa.ts         wszystkie stałe sprzętowe i progi; "do potwierdzenia" przy wartościach niepodanych w pracy
   protocol/

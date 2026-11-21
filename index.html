@@ -4,11 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="TASA Monitor: stan, działanie i aktywacja kotwicy TASA oraz stacji uzbrajania" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"%3E%3Crect width="256" height="256" fill="%23fff"/%3E%3Cpolygon points="128.00 32.00 44.86 176.00 211.14 176.00" fill="none" stroke="%23000" stroke-width="5" stroke-linejoin="round"/%3E%3Cpolygon points="80.00 211.14 224.00 128.00 80.00 44.86" fill="none" stroke="%23000" stroke-width="5" stroke-linejoin="round"/%3E%3Cpath d="M104.00 121.57L80.00 211.14" stroke="%23000" stroke-width="18" stroke-linecap="round"/%3E%3Cpath d="M134.43 152.00L224.00 128.00" stroke="%23000" stroke-width="18" stroke-linecap="round"/%3E%3Cpath d="M145.57 110.43L80.00 44.86" stroke="%23000" stroke-width="18" stroke-linecap="round"/%3E%3Cpath d="M120.80 58.87L104.00 121.57" stroke="%23fff" stroke-width="34"/%3E%3Cpath d="M128.00 32.00L104.00 121.57" stroke="%23000" stroke-width="18" stroke-linecap="round"/%3E%3Cpath d="M104.48 119.78L103.04 125.15" stroke="%23000" stroke-width="18"/%3E%3Cpath d="M71.73 168.80L134.43 152.00" stroke="%23fff" stroke-width="34"/%3E%3Cpath d="M44.86 176.00L134.43 152.00" stroke="%23000" stroke-width="18" stroke-linecap="round"/%3E%3Cpath d="M132.64 152.48L138.01 151.04" stroke="%23000" stroke-width="18"/%3E%3Cpath d="M191.47 156.33L145.57 110.43" stroke="%23fff" stroke-width="34"/%3E%3Cpath d="M211.14 176.00L145.57 110.43" stroke="%23000" stroke-width="18" stroke-linecap="round"/%3E%3Cpath d="M146.88 111.74L142.95 107.81" stroke="%23000" stroke-width="18"/%3E%3C/svg%3E" />
     <title>TASA Monitor</title>
+    <style>
+      /* Komunikat widoczny tylko wtedy, gdy aplikacja nie wystartuje w ciągu 2 s albo zgłosi błąd. */
+      html, body { margin: 0; background: #eceef1; color: #000; font-family: system-ui, sans-serif; }
+      @media (prefers-color-scheme: dark) { html, body { background: #0f1114; color: #f3f5f7; } }
+      .boot { max-width: 680px; margin: 48px auto; padding: 0 16px; line-height: 1.5; opacity: 0; animation: boot-show 0s linear 2s forwards; }
+      .boot.now { animation: none; opacity: 1; }
+      .boot h1 { font-size: 22px; margin: 0 0 12px; }
+      .boot code { background: rgba(127, 127, 127, 0.18); padding: 1px 5px; border-radius: 3px; }
+      .boot pre { white-space: pre-wrap; background: rgba(208, 59, 59, 0.12); padding: 10px; border-radius: 4px; font-size: 13px; }
+      @keyframes boot-show { to { opacity: 1; } }
+    </style>
+    <script>
+      // Błędy przed uruchomieniem Reacta trafiają do komunikatu zamiast białej strony.
+      (function () {
+        function show(msg) {
+          var box = document.getElementById('boot');
+          var pre = document.getElementById('boot-error');
+          if (!box || !pre) return;
+          box.className = 'boot now';
+          pre.hidden = false;
+          pre.textContent += msg + '\n';
+        }
+        window.addEventListener('error', function (e) {
+          var t = e.target;
+          if (t && t.tagName === 'SCRIPT') show('Nie wczytano skryptu: ' + (t.src || 'skrypt wbudowany'));
+          else if (e.message) show(e.message + (e.filename ? ' (' + e.filename + ':' + e.lineno + ')' : ''));
+        }, true);
+        window.addEventListener('unhandledrejection', function (e) {
+          show('Nieobsłużony błąd: ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
+        });
+      })();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="boot" class="boot" role="alert">
+        <h1>TASA Monitor nie uruchomił się</h1>
+        <p>Jeżeli otwierasz plik <code>index.html</code> z katalogu głównego repozytorium, to jest plik źródłowy. Uruchom <code>npm install</code> i <code>npm run dev</code>, a potem otwórz adres <code>http://localhost:5173</code>.</p>
+        <p>Wersję do otwarcia bez serwera tworzy polecenie <code>npm run build</code>: plik <code>dist/index.html</code> można otworzyć dwuklikiem w Chrome lub Edge.</p>
+        <p>Aplikacja wymaga aktualnej przeglądarki z obsługą JavaScript.</p>
+        <pre id="boot-error" hidden></pre>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

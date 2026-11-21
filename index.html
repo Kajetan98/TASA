@@ -43,9 +43,9 @@
     <div id="root">
       <div id="boot" class="boot" role="alert">
         <h1>TASA Monitor nie uruchomił się</h1>
-        <p>Jeżeli otwierasz plik <code>index.html</code> z katalogu głównego repozytorium, to jest plik źródłowy. Uruchom <code>npm install</code> i <code>npm run dev</code>, a potem otwórz adres <code>http://localhost:5173</code>.</p>
-        <p>Wersję do otwarcia bez serwera tworzy polecenie <code>npm run build</code>: plik <code>dist/index.html</code> można otworzyć dwuklikiem w Chrome lub Edge.</p>
-        <p>Aplikacja wymaga aktualnej przeglądarki z obsługą JavaScript.</p>
+        <p>Przeglądarka dostała plik źródłowy <code>index.html</code> z repozytorium zamiast zbudowanej aplikacji. Plik źródłowy odwołuje się do <code>src/main.tsx</code>, którego przeglądarka nie uruchomi.</p>
+        <p>Jeżeli to strona na GitHub Pages: w Settings → Pages ustaw Source na "GitHub Actions" i poczekaj na zakończenie workflow w zakładce Actions.</p>
+        <p>Lokalnie: <code>npm install</code> i <code>npm run dev</code> (adres <code>http://localhost:5173</code>) albo <code>npm run build</code> i otwarcie pliku <code>dist/index.html</code> w Chrome lub Edge.</p>
         <pre id="boot-error" hidden></pre>
       </div>
     </div>

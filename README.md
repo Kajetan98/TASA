@@ -41,7 +41,7 @@ npm run preview
 
 ### GitHub Pages
 
-Workflow `.github/workflows/pages.yml` buduje i publikuje stronę po każdym pushu na `main` (lub ręcznie z zakładki Actions). Jednorazowo trzeba włączyć Pages: Settings → Pages → Source: GitHub Actions. Strona będzie pod adresem `https://<użytkownik>.github.io/TASA/`. Web Serial i Web Bluetooth działają na tej stronie, bo jest serwowana przez https.
+Workflow `.github/workflows/pages.yml` buduje i publikuje stronę po każdym pushu na `main` (lub ręcznie z zakładki Actions). Jednorazowo trzeba włączyć Pages: Settings → Pages → Source: GitHub Actions (ustawienie "Deploy from a branch" serwuje plik źródłowy i strona się nie uruchomi). Workflow publikuje też z gałęzi `claude/awesome-darwin-q3xlas`; jeśli deployment jest odrzucony, dopuść gałąź w Settings → Environments → github-pages → Deployment branches. Strona będzie pod adresem `https://<użytkownik>.github.io/TASA/`. Web Serial i Web Bluetooth działają na tej stronie, bo jest serwowana przez https.
 
 Testy jednostkowe (Vitest):
 

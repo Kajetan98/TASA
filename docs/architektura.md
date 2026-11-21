@@ -68,4 +68,15 @@ src/
 
 ## Rozpoznawanie cyklu uzbrajania
 
-Rekord próby typu "uzbrojenie" otwiera przejście etapu z 0 do 1 (lub dowolnego etapu > 0 po etapie 0) i zamyka powrót do etapu 0 lub osiągnięcie etapu 6 z płytą w S1, alarm albo brak zmian przez czas określony w konfiguracji. Rekord zawiera wiersze LOG, alarmy, wyniki dopasowania F(x) dla każdej próby naciągu, siłę szczytową i resztkową.
+Rekord próby otwiera wyjście z etapu 0 lub 6 do etapu roboczego (1–5, 7, 8). Przejście 6 → 8 (polecenie DISCHARGE na uzbrojonej kotwicy) zamyka rekord uzbrojenia i otwiera rekord rozładowania. Rekord zamyka się, gdy:
+
+- etap wraca do 0 (przerwanie z alarmem, koniec rozładowania),
+- etap 6 trwa bez ruchu płyty przez `ARM_RECORD_SETTLE_S` (uzbrojona, płyta w S1),
+- płyta stoi 30 s z aktywnym alarmem (zatrzymanie, np. SENSOR/OVERLOAD),
+- użytkownik zmienia scenariusz symulacji albo rozłącza źródło.
+
+Rekord zawiera wiersze LOG, alarmy, impulsy Y3 (z wierszy IO) oraz dla każdej próby naciągu: dopasowanie prostej F(x) metodą najmniejszych kwadratów (z pominięciem początku i ostatnich 1,5 mm skoku), siłę szczytową, skok i siłę resztkową. Oczekiwane nachylenie w ponowionej próbie aplikacja szacuje z siły resztkowej poprzedniej próby (ok. 210 N na niezatrzaśnięty zaczep) i oznacza je jako szacunek.
+
+## Ocena scenariuszy w trybie symulacji
+
+Panel stacji porównuje wynik z oczekiwanym, gdy wykonano wszystkie kroki operatora, płyta poruszyła się po ostatnim poleceniu i stoi od 1,5 s. Porównanie korzysta wyłącznie z odebranych wierszy (etap, alarmy, impulsy Y3, S1, M1), a nie ze stanu wewnętrznego symulatora.

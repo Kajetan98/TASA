@@ -29,7 +29,8 @@ export class StationModel {
   alarmsSeen = new Set<string>();
   y3Pulses = 0;
   private lastY3: boolean | null = null;
-  private lastMoveT: number | null = null;
+  /** Czas sterownika [s] ostatniego ruchu płyty (zmiana x). */
+  lastMoveT: number | null = null;
   readonly cycles = new CycleRecorder();
 
   /** Czas [s] wiersza LOG po przeliczeniu jednostki. */

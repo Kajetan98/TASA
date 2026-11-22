@@ -39,6 +39,14 @@ Wynik to jeden plik `dist/index.html` (ok. 640 kB). Można go otworzyć z dysku 
 npm run preview
 ```
 
+### Gotowy plik w repozytorium
+
+`TASA_Monitor.html` w katalogu głównym to zbudowana aplikacja w jednym pliku: można ją pobrać i otworzyć dwuklikiem. Gdy serwer statyczny poda plik źródłowy `index.html` (np. GitHub Pages w trybie "Deploy from a branch"), strona sama przechodzi na `TASA_Monitor.html`. Po zmianach w kodzie plik odświeża polecenie:
+
+```bash
+npm run build:standalone
+```
+
 ### GitHub Pages
 
 Workflow `.github/workflows/pages.yml` buduje i publikuje stronę po każdym pushu na `main` (lub ręcznie z zakładki Actions). Jednorazowo trzeba włączyć Pages: Settings → Pages → Source: GitHub Actions (ustawienie "Deploy from a branch" serwuje plik źródłowy i strona się nie uruchomi). Workflow publikuje też z gałęzi `claude/awesome-darwin-q3xlas`; jeśli deployment jest odrzucony, dopuść gałąź w Settings → Environments → github-pages → Deployment branches. Strona będzie pod adresem `https://<użytkownik>.github.io/TASA/`. Web Serial i Web Bluetooth działają na tej stronie, bo jest serwowana przez https.

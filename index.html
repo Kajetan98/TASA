@@ -20,6 +20,14 @@
     <script>
       // Błędy przed uruchomieniem Reacta trafiają do komunikatu zamiast białej strony.
       (function () {
+        function sessionStorageFlag() {
+          // zabezpieczenie przed pętlą przekierowań
+          try {
+            if (sessionStorage.getItem('tasa-redirected')) return true;
+            sessionStorage.setItem('tasa-redirected', '1');
+          } catch (e) {}
+          return false;
+        }
         function show(msg) {
           var box = document.getElementById('boot');
           var pre = document.getElementById('boot-error');
@@ -30,7 +38,16 @@
         }
         window.addEventListener('error', function (e) {
           var t = e.target;
-          if (t && t.tagName === 'SCRIPT') show('Nie wczytano skryptu: ' + (t.src || 'skrypt wbudowany'));
+          if (t && t.tagName === 'SCRIPT') {
+            // Serwer statyczny (np. GitHub Pages w trybie "Deploy from a branch") podał plik źródłowy:
+            // przejście na zbudowaną wersję zapisaną w repozytorium.
+            var local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            if (/^https?:$/.test(location.protocol) && !local && !sessionStorageFlag()) {
+              location.replace('./TASA_Monitor.html');
+              return;
+            }
+            show('Nie wczytano skryptu: ' + (t.src || 'skrypt wbudowany'));
+          }
           else if (e.message) show(e.message + (e.filename ? ' (' + e.filename + ':' + e.lineno + ')' : ''));
         }, true);
         window.addEventListener('unhandledrejection', function (e) {
